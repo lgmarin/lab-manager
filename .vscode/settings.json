@@ -1,4 +1,5 @@
 {
     "terminal.integrated.defaultProfile.linux": "zsh",
-    "terminal.integrated.fontFamily": "NotoSansMono Nerd Font"
+    "terminal.integrated.fontFamily": "NotoSansMono Nerd Font",
+    "python.analysis.autoImportCompletions": false
 }
