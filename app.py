@@ -1,3 +1,6 @@
+""" Laboratory Management
+    Developed by: Luiz Marin
+"""
 from lab_manager import create_app
 
 app = create_app()

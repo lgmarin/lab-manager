@@ -1,7 +1,7 @@
 {% extends "layout.jinja2" %}
 {% block content %}
-    <div class="container-sm">
-        <form action="" method="POST">
+    <div class="content-section ">
+        <form action="" method="POST" novalidate>
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend>Register your new account</legend>
@@ -18,26 +18,91 @@
                         {{ form.username(class="form-control") }} 
                     {% endif %}                   
                 </div>
+
                 <div class="form-group">
                     {{ form.name.label(class="form-control-label") }}
-                    {{ form.name(class="form-control") }}   
+                    {% if form.name.errors %}
+                        {{ form.name(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.name.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.name(class="form-control") }} 
+                    {% endif %}        
                 </div>
+
                 <div class="form-group">
                     {{ form.email.label(class="form-control-label") }}
-                    {{ form.email(class="form-control") }}   
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control") }} 
+                    {% endif %}      
                 </div>
+
+                <div class="form-group">
+                    {{ form.grr.label(class="form-control-label") }}
+                    {% if form.grr.errors %}
+                        {{ form.grr(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.grr.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.grr(class="form-control") }} 
+                    {% endif %}      
+                </div>
+
                 <div class="form-group">
                     {{ form.project.label(class="form-control-label") }}
-                    {{ form.project(class="form-control") }}   
+                    {% if form.project.errors %}
+                        {{ form.project(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.project.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.project(class="form-control") }} 
+                    {% endif %}
                 </div>
+
                 <div class="form-group">
                     {{ form.password.label(class="form-control-label") }}
-                    {{ form.password(class="form-control") }}   
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control") }} 
+                    {% endif %}
                 </div>
+
                 <div class="form-group">
                     {{ form.password2.label(class="form-control-label") }}
-                    {{ form.password2(class="form-control") }}   
-                </div>                                                                                
+                    {% if form.password2.errors %}
+                        {{ form.password2(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password2.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password2(class="form-control") }} 
+                    {% endif %}        
+                </div>
+
             </fieldset>
                 <br/>
                 <div class="form-group">

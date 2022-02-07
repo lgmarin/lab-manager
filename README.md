@@ -41,4 +41,4 @@ Install all dependencies:
 
 Run Flask server
     
-    flask run
+    export FLASK_ENV=development; flask run
