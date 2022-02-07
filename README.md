@@ -1,7 +1,7 @@
 # lab-manager
-An University Laboratory Manager developed in Python/Flask
+An University Laboratory Management tool developed in Python/Flask
 
-## _Blog Web Application based in Flask_
+## _A Laboratory Management Web Application based in Flask_
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 
 I created this app based on the needs of the Laboratório de Máquinas Térmicas at the Federal University of Paraná.
