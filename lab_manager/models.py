@@ -60,7 +60,7 @@ class Project(db.Model):
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable = False)
 
 
-class Admin(db.Model):
+class Admin(db.Model, UserMixin):
     """ User Model - Non Admin Access
     
         Columns:
