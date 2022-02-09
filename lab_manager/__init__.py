@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from lab_manager.config import Config
 
+
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
@@ -33,7 +34,7 @@ def create_app(config_class=Config):
     app.register_blueprint(admin)
 
     #Load DB Models
-    from .models import User, Project, Admin
+    from .models import User, Project
 
     initialize_database(app)
 

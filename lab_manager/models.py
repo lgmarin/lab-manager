@@ -9,16 +9,19 @@ from datetime import datetime
 
 
 class User(db.Model, UserMixin):
-    """ User Model - Non Admin Access
+    """ User Model
     
         Columns:
 
             id              :   Integer
-            username        :   String
             email           :   String
+            username        :   String
             name            :   String
-            grr             :   Integer
             password        :   String
+
+            grr             :   Integer
+            course          :   String
+
             date_created    :   DateTime
             approved        :   Boolean (Default = False)
             biometry        :   Boolean (Default = False)
@@ -27,20 +30,30 @@ class User(db.Model, UserMixin):
             approved_by     :   Relationship - Admin
             approved_in     :   DateTime
 
+            admin           :   Boolean (Default = False)
+
     """
-
+    #Basic ID for users
     id = db.Column(db.Integer, primary_key = True)
-    email = db.Column(db.String(100), unique = True)
-    username = db.Column(db.String(100), unique = True)
+    email = db.Column(db.String(50), unique = True)
+    username = db.Column(db.String(50), unique = True)
     name = db.Column(db.String(150), unique = True)
-    grr = db.Column(db.Integer, unique = True)
     password = db.Column(db.String(100))
-    date_created = db.Column(db.DateTime, default = datetime.utcnow)
-    approved = db.Column(db.Boolean, default=False, nullable=False)
-    biometry = db.Column(db.Boolean, default=False, nullable=False)
 
+    date_created = db.Column(db.DateTime, default = datetime.utcnow)
+    biometry = db.Column(db.Boolean, default = False, nullable = False)
     project = db.Column(db.Integer, db.ForeignKey('project.id'), nullable = False)
-    approved_by = db.Column(db.Integer, db.ForeignKey('admin.id'))
+
+    #Profile Data
+    grr = db.Column(db.Integer, unique = True)
+    course = db.Column(db.String(50))
+
+    #Relationships
+    approved_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    date_approved = db.Column(db.DateTime, default = datetime.utcnow)
+    approved = db.Column(db.Boolean, default = False, nullable = False)
+    admin = db.Column(db.Boolean, default = False, nullable = False)
+
 
 class Project(db.Model):
     """ Project Model
@@ -51,39 +64,11 @@ class Project(db.Model):
             name            :   String
             date_created    :   DateTime
             active          :   Boolean (Default = True)
+            created_by      :   String (Relationship - User Model)
 
     """
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(150), unique = True)
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
     active = db.Column(db.Boolean, default=True, nullable=False)
-    admin = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable = False)
-
-
-class Admin(db.Model, UserMixin):
-    """ User Model - Non Admin Access
-    
-        Columns:
-
-            id              :   Integer
-            username        :   String
-            email           :   String
-            name            :   String
-            password        :   String
-            biometry        :   Boolean (Default = False)
-            active          :   Boolean (Default = True)
-            date_created    :   DateTime
-
-        Relationships:
-
-            users           :   User Model
-
-    """
-
-    id = db.Column(db.Integer, primary_key = True)
-    email = db.Column(db.String(100), unique = True)
-    username = db.Column(db.String(100), unique = True)
-    name = db.Column(db.String(150), unique = True)
-    password = db.Column(db.String(100))
-    date_created = db.Column(db.DateTime, default = datetime.utcnow)
-    biometry = db.Column(db.Boolean, default=False, nullable=False)
+    created_by = db.Column(db.Integer, db.ForeignKey('user.id'))
