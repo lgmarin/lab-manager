@@ -31,7 +31,6 @@ class User(db.Model, UserMixin):
             approved_in     :   DateTime
 
             admin           :   Boolean (Default = False)
-
     """
     #Basic ID for users
     id = db.Column(db.Integer, primary_key = True)
@@ -65,7 +64,6 @@ class Project(db.Model):
             date_created    :   DateTime
             active          :   Boolean (Default = True)
             created_by      :   String (Relationship - User Model)
-
     """
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(150), unique = True)
