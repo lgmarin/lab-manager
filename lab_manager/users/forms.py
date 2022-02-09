@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from lab_manager.models import User
+
 
 class Registration(FlaskForm):
-    username     = StringField('Username', validators=[Length(min=4, max=25), DataRequired()])
     email        = StringField('Email Address', validators=[Length(min=6, max=35), DataRequired(), Email()])
     name         = StringField('Name', validators=[DataRequired(), Length(min=10, max=30)])
     grr          = IntegerField('GRR', validators=[DataRequired()])
@@ -11,6 +12,16 @@ class Registration(FlaskForm):
     password     = PasswordField('Password', validators=[Length(min=6, max=20), DataRequired()])
     password2    = PasswordField('Confirm Password', validators=[EqualTo('password'), DataRequired()])
     submit       = SubmitField('Submit')
+
+    def validate_email(form, email):
+        test = User.query.filter_by(email=form.email.data).first()
+        if test:
+            raise ValidationError('Your email is already in use!')
+
+    def validate_grr(form, grr):
+        test = User.query.filter_by(grr=form.grr.data).first()
+        if test:
+            raise ValidationError('Your GRR is already in use!')
 
 class Login(FlaskForm):
     email        = StringField('Email Address', validators=[Length(min=6, max=35), DataRequired(), Email()])

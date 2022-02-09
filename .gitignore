@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 .vscode/
+lab_manager/dev_defaults.py

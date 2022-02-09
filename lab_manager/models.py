@@ -35,8 +35,7 @@ class User(db.Model, UserMixin):
     #Basic ID for users
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String(50), unique = True)
-    username = db.Column(db.String(50), unique = True)
-    name = db.Column(db.String(150), unique = True)
+    name = db.Column(db.String(150))
     password = db.Column(db.String(100))
 
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
@@ -48,7 +47,7 @@ class User(db.Model, UserMixin):
     course = db.Column(db.String(50))
 
     #Relationships
-    approved_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    approved_by = db.Column(db.Integer)
     date_approved = db.Column(db.DateTime, default = datetime.utcnow)
     approved = db.Column(db.Boolean, default = False, nullable = False)
     admin = db.Column(db.Boolean, default = False, nullable = False)
