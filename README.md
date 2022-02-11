@@ -39,6 +39,6 @@ Install all dependencies:
 
     pip install -r requirements.txt
 
-Run Flask server
+Run Flask server (In DEV mode)
     
     export FLASK_ENV=development; flask run

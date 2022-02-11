@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, redirect, flash, url_for
 from lab_manager.users.forms import Registration, Login
 from lab_manager import db
 from lab_manager.models import User
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 
 users = Blueprint('users', __name__)
 
@@ -42,7 +42,7 @@ def register():
 
         return redirect(url_for('users.login'))
 
-    return render_template('users/register.jinja2', title='Register', form=form)
+    return render_template('users/register.jinja2', title='Register', form=form, user=current_user)
 
 
 @users.route("/login", methods = ['GET', 'POST'])
@@ -69,19 +69,19 @@ def login():
         else:
             login_user(user)
             flash(f'User {form.email.data} logged in successfully!', 'success')
-            return redirect('home')
+            return redirect('users.profile')
 
-    return render_template('users/login.jinja2', title='Login', form=form)
+    return render_template('users/login.jinja2', title='Login', form=form, user=current_user)
 
 
 @users.route("/logout")
 def logout():
     logout_user()
     flash('User logged out successfully!', 'success')
-    return redirect(url_for('users.login'))
-
+    return redirect(url_for('home'))
 
 @users.route("/profile")
+@login_required
 def profile():
     """ User Profile Route
 
@@ -89,8 +89,4 @@ def profile():
         Methods     :   None
         Redirect to :   User Profile
     """
-    if current_user.is_authenticated:
-        return render_template('users/profile.jinja2')
-    else:
-        flash('You need to login to edit your profile', 'warning')
-        return redirect(url_for('users.login'))
+    return render_template('users/profile.jinja2', user=current_user)

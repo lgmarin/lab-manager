@@ -11,38 +11,43 @@
     <title>Lab Manager - {{ title }}</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-md">
-            <div class="navbar-header">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand" href="{{url_for('main.home')}}">Lab-Manager</a>                                        
-            </div>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{url_for('main.home')}}">Home</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{url_for('users.register')}}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{url_for('users.login')}}">Login</a>
-                    </li>
-                    <li class="nav-item">                    
-                        <a class="nav-link active" href="{{url_for('users.profile')}}">Profile</a>
-                    </li>                            
-                    <li class="nav-item">                    
-                        <a class="nav-link active" href="{{url_for('users.logout')}}">Logout</a>
-                    </li>                      
-                </ul>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand mr-4" href="/">Lab Manager</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <div class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <a href="#" class="nav-item nav-link">Home</a>
+                </div>
+                <div class="navbar-nav">
+                    {% if user.is_authenticated and user.admin==False %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{user.email}} </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{url_for('users.profile')}}">Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{url_for('users.logout')}}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% elif user.is_authenticated and user.admin==True %}                          
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{user.email}} </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{url_for('admin.dashboard')}}">Admin Dashboard</a></li>                            
+                                <li><a class="dropdown-item" href="{{url_for('admin.profile')}}">Profile</a></li>                          
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{url_for('admin.logout')}}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}                    
+                        <a href="{{url_for('users.login')}}" class="nav-item nav-link">Login</a>
+                        <a href="{{url_for('users.register')}}" class="nav-item nav-link">Sign Up</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>
-    <main class="container-md" role="main">
+    <main class="container full-page" role="main">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
