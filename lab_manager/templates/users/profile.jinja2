@@ -8,12 +8,12 @@
             <div class="card-body">
                 <h5 class="card-title">{{ user.email }}</h5>
                 <p class="card-text">{{ user.name }}</p>
+                {% if not user.approved %} <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#approval_info">Waiting for Approval</button> {% else %} <button type="button" class="btn btn-success btn-sm">Approved</button> {% endif %}
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Project: {{ user.project }}</li>
                 <li class="list-group-item">Course: {% if not user.course %} <a href="">Enter Course</a> {% else %} {{ user.course }} {% endif %}</li>
-                <li class="list-group-item">Active: {% if not user.approved %} <a href="">Waiting for approval</a> {% else %} Approved {% endif %} </li>
-                <li class="list-group-item">Biometry: {% if not user.biometry %} <a href="">Create Biometry</a> {% else %} Biometry registered {% endif %} </li>
+                <li class="list-group-item">Biometry: {% if not user.approved %} Waiting for Approval {% else %} {% if not user.biometry %} <a href="">Create Biometry</a> {% else %} Biometry registered {% endif %} {% endif %} </li>
             </ul>
             <div class="card-body">
                 <a href="#" class="card-link">Change Password</a>
@@ -22,16 +22,38 @@
         </div>
         <div class="col-md-8">
             <div class="card">
-            <div class="card-header">
-                Information
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+                <div class="card-header">
+                    Information
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="approval_info" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Approval Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% if not user.approved %}
+            Waiting for approval by the project admin.
+        {% else %}
+            Approved by {{user.approved_by}} in {{user.date_approved}}.
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock content %}

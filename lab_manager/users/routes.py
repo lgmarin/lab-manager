@@ -31,6 +31,7 @@ def register():
             name=form.name.data, 
             email=form.email.data, 
             grr=form.grr.data, 
+            course=form.course.data,
             project=form.project.data
             )
         user.set_password(form.password.data)
@@ -69,7 +70,7 @@ def login():
         else:
             login_user(user)
             flash(f'User {form.email.data} logged in successfully!', 'success')
-            return redirect('users.profile')
+            return redirect(url_for('users.profile'))
 
     return render_template('users/login.jinja2', title='Login', form=form, user=current_user)
 
@@ -78,7 +79,8 @@ def login():
 def logout():
     logout_user()
     flash('User logged out successfully!', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for('main.home'))
+
 
 @users.route("/profile")
 @login_required
@@ -89,4 +91,4 @@ def profile():
         Methods     :   None
         Redirect to :   User Profile
     """
-    return render_template('users/profile.jinja2', user=current_user)
+    return render_template('users/profile.jinja2', title=current_user.name + ' Profile', user=current_user)

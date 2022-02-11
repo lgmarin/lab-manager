@@ -48,16 +48,30 @@
                 </div>
 
                 <div class="form-group">
+                    {{ form.course.label(class="form-control-label") }}
+                    {% if form.course.errors %}
+                        {{ form.course(class="form-select is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.course.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.course(class="form-select") }} 
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
                     {{ form.project.label(class="form-control-label") }}
                     {% if form.project.errors %}
-                        {{ form.project(class="form-control is-invalid") }}
+                        {{ form.project(class="form-select is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.project.errors %}
                                 <span>{{error}}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.project(class="form-control") }} 
+                        {{ form.project(class="form-select") }} 
                     {% endif %}
                 </div>
 

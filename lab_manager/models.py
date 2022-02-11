@@ -37,7 +37,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String(50), unique = True)
     name = db.Column(db.String(150))
-    password = db.Column(db.String(100))
+    password = db.Column(db.String(128))
 
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
     biometry = db.Column(db.Boolean, default = False, nullable = False)
