@@ -5,6 +5,12 @@ from functools import wraps
 
 admin = Blueprint('admin', __name__)
 
+
+@admin.errorhandler(403)
+def forbidden_403(exception):
+    return 'Admin access only', 403
+
+
 def admin_only(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -26,7 +32,7 @@ def register():
         flash(f'Admin {form.username} registered successfully! Go to you profile page and update your personal information.', category='success')
         return redirect('/success')
 
-    return render_template('register_adm.jinja2', title='Register', form=form)
+    return render_template('admin/register.jinja2', title='Admin Register', form=form)
 
 
 @admin.route("/admin/login", methods = ['GET', 'POST'])
@@ -37,15 +43,11 @@ def login():
         flash(f'Admin {form.username} logged in successfully!', category='success')
         return redirect('/success')
 
-    return render_template('login_adm.jinja2', title='Login', form=form)
+    return render_template('admin/login.jinja2', title='Admin Login', form=form)
 
 
 @admin.route("/admin")
 @admin_only
 def admin_dash():
-    return render_template('admin_dash.jinja2', title = "Home")
+    return render_template('admin/dashboard.jinja2', title = "Admin Dashboard")
 
-
-@admin.errorhandler(403)
-def forbidden_403(exception):
-    return 'Admin access only', 403

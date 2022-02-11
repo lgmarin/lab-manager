@@ -6,6 +6,7 @@
 from . import db
 from flask_login import UserMixin
 from datetime import datetime
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 class User(db.Model, UserMixin):
@@ -52,6 +53,13 @@ class User(db.Model, UserMixin):
     approved = db.Column(db.Boolean, default = False, nullable = False)
     admin = db.Column(db.Boolean, default = False, nullable = False)
 
+    def set_password(self, password_form):
+        #Set Password, store hashed password on DB
+        self.password = generate_password_hash(password_form)
+
+    def check_password(self, password_form):
+        #Check password based on the stored hash
+        return check_password_hash(self.password, password_form)
 
 class Project(db.Model):
     """ Project Model
