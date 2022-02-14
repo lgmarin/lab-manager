@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 16rem;">
             <img class="img-fluid" src="{{ url_for('static', filename='img/default_user.png')}}" class="card-img-top" alt="Profile Picture">
             <div class="card-body">
                 <h5 class="card-title">{{ user.email }}</h5>
@@ -20,8 +20,8 @@
             </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <div class="card">
+        <div class="col-9">
+            <div class="card mb-3">
                 <div class="card-header">
                     Information
                 </div>
@@ -30,7 +30,17 @@
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                     <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
-            </div>
+            </div>   
+            <div class="card mb-3">
+                <div class="card-header">
+                    Information
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>                
+            </div>            
         </div>
     </div>
 </div>
