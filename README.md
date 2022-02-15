@@ -3,6 +3,9 @@ An University Laboratory Management tool developed in Python/Flask
 
 ## _A Laboratory Management Web Application based in Flask_
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 I created this app based on the needs of the Laboratório de Máquinas Térmicas at the Federal University of Paraná.
 
@@ -27,6 +30,7 @@ Develop a Laboratory Manager using Flask to develop some skills with:
 * SQLAlchemy
 * FlaskLogin
 * WTForms
+* Werkzeug
 
 ## Usage
 
