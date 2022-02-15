@@ -61,6 +61,7 @@ class User(db.Model, UserMixin):
         #Check password based on the stored hash
         return check_password_hash(self.password, password_form)
 
+
 class Project(db.Model):
     """ Project Model
     
