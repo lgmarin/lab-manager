@@ -64,7 +64,7 @@ def login():
         
         user = User.query.filter_by(email=form.email.data).first()
 
-        if user is None or user.check_password(form.password.data):
+        if user is None or not user.check_password(form.password.data):
             flash("Invalid username or password!", 'danger')
             return redirect(url_for('users.login'))
         else:

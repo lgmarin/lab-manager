@@ -46,7 +46,7 @@ def login():
 
     if current_user.is_authenticated:
         flash("User is already logged in!", 'info')
-        return redirect(url_for("admin.admin_dash"))
+        return redirect(url_for("admin.dashboard"))
     
     form = Login()
 
@@ -57,20 +57,25 @@ def login():
         if not user.admin:
             flash("You are not an administrator, please go to the users login!", 'warning')
             return redirect(url_for("users.login"))
-        if user is None or user.check_password(form.password.data):
-            print()
+        elif user is None or not user.check_password(form.password.data):
             flash("Invalid username or password!", 'danger')
             return redirect(url_for("admin.login"))
         else:
             login_user(user)
             flash(f'Admin {form.email} logged in successfully!', category='success')
-            return redirect(url_for("admin.admin_dash"))
+            return redirect(url_for("admin.dashboard"))
 
     return render_template('admin/login.jinja2', title='Admin Login', form=form, user=current_user)
 
 
 @admin.route("/admin")
 @admin_only
-def admin_dash():
+def dashboard():
     return render_template('admin/dashboard.jinja2', title = "Admin Dashboard", user=current_user)
 
+@admin.route("/logout")
+@admin_only
+def logout():
+    logout_user()
+    flash('User logged out successfully!', 'success')
+    return redirect(url_for('main.home'))
