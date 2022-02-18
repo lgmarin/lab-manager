@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, redirect, flash, url_for, abort
 from flask_login import current_user, login_user, logout_user
 from lab_manager.users.forms import Registration, Login
-from lab_manager.models import User
+from lab_manager.models import User, Project
 from functools import wraps
 
 admin = Blueprint('admin', __name__)
@@ -73,6 +73,23 @@ def login():
 @admin_only
 def dashboard():
     return render_template('admin/dashboard.jinja2', title = "Admin Dashboard", user=current_user)
+
+
+@admin.route("/admin/users")
+@admin_only
+def users():
+    users = User.query
+
+    return render_template('admin/users.jinja2', title = "Users", users=users, user=current_user)
+
+
+@admin.route("/admin/projects")
+@admin_only
+def projets():
+    projects = Project.query
+
+    return render_template('admin/projects.jinja2', title = "Projects", projects=projects, user=current_user)
+
 
 @admin.route("/logout")
 @admin_only

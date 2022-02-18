@@ -1,0 +1,49 @@
+{% extends "layout.jinja2" %}
+{% block content %}
+<table id="data" class="table table-striped">
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Project</th>
+        <th>Course</th>
+        <th>Admin</th>
+        <th>Approved</th>
+        <th>Biometry</th>
+    </tr>
+</thead>
+<tbody>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.project }}</td>
+        <td>{{ user.course }}</td>
+        <td>{{ user.admin }}</td>
+        <td>{{ user.approved }}</td>
+        <td>{{ user.biometry }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock content %}
+{% block scripts %}
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#data').DataTable({
+                columns: [
+                    null,
+                    null,
+                    null,
+                    {searchable: false},
+                    {searchable: false},
+                    {searchable: false},
+                    {searchable: false},                                        
+                ],
+            });
+        });
+    </script>
+{% endblock scripts %}
