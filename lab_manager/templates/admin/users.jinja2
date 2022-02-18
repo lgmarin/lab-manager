@@ -10,6 +10,7 @@
         <th>Admin</th>
         <th>Approved</th>
         <th>Biometry</th>
+        <th>Actions</th>
     </tr>
 </thead>
 <tbody>
@@ -20,8 +21,21 @@
         <td>{{ user.project }}</td>
         <td>{{ user.course }}</td>
         <td>{{ user.admin }}</td>
-        <td>{{ user.approved }}</td>
+        <td>
+            {# {{user.approved}} #}
+            {% if user.approved %}
+                <a href="#" class="btn btn-success active" aria-current="page"><i class="bi bi-check-square"></i></a>
+            {% else %}
+                <a href="#" class="btn btn-primary"><i class="bi bi-x-square"></i></a>
+            {% endif %}
+        </td>
         <td>{{ user.biometry }}</td>
+        <td>
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <button type="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i></button>
+                <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+            </div>        
+        </td>
     </tr>
     {% endfor %}
 </tbody>
@@ -41,8 +55,9 @@
                     {searchable: false},
                     {searchable: false},
                     {searchable: false},
-                    {searchable: false},                                        
-                ],
+                    {searchable: false},
+                    {searchable: false},                                      
+                ],              
             });
         });
     </script>

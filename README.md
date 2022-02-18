@@ -21,6 +21,7 @@ Develop a Laboratory Manager using Flask to develop some skills with:
 * Development of a full stack web application
 * Work with form validation in Flask
 * Work with HTML and Bootstrap
+* Work with DataTables.js together with Flask
 * Work with GIT
 * Work with relational database (SQL)
 

@@ -1,14 +1,17 @@
 {% extends "layout.jinja2" %}
 {% block content %}
+<div class="container">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">New Project</button>
+    <br>
+</div>
+
 <table id="data" class="table table-striped">
 <thead>
     <tr>
         <th>Name</th>
-        <th>Email</th>
-        <th>Project</th>
-        <th>Course</th>
-        <th>Approved</th>
-        <th>Biometry</th>
+        <th>Created by</th>
+        <th>Created in</th>
+        <th>Actions</th>
     </tr>
 </thead>
 <tbody>
@@ -17,13 +20,41 @@
         <td>{{ user.name }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.project }}</td>
-        <td>{{ user.course }}</td>
-        <td>{{ user.approved }}</td>
-        <td>{{ user.biometry }}</td>
+        <td>
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <button type="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i></button>
+                <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+            </div>     
+        </td>
+
     </tr>
     {% endfor %}
 </tbody>
 </table>
+
+<div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Project</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Project name:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
 {% block scripts %}
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
