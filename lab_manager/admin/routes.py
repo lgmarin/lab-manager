@@ -7,6 +7,7 @@ from functools import wraps
 admin = Blueprint('admin', __name__)
 
 
+# Error handler to be used together with the admin_only custom decorator
 @admin.errorhandler(403)
 def forbidden_403(exception):
     return 'Admin access only', 403
