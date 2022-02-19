@@ -24,16 +24,16 @@
         <td>
             {# {{user.approved}} #}
             {% if user.approved %}
-                <a href="#" class="btn btn-success active" aria-current="page"><i class="bi bi-check-square"></i></a>
+                <a href="#" class="btn btn-success active btn-sm" aria-current="page"><i class="bi bi-check-square"></i></a>
             {% else %}
-                <a href="#" class="btn btn-primary"><i class="bi bi-x-square"></i></a>
+                <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-x-square"></i></a>
             {% endif %}
         </td>
         <td>{{ user.biometry }}</td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                <button type="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i></button>
-                <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                <button type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button>
+                <button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
             </div>        
         </td>
     </tr>

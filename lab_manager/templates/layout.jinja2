@@ -23,7 +23,7 @@
                     <a href="/" class="nav-item nav-link">Home</a>
                     {% if user.is_authenticated and user.admin==True %}
                         <a href="{{url_for('admin.users')}}" class="nav-item nav-link">Users</a>
-                        <a href="{{url_for('admin.projets')}}" class="nav-item nav-link">Projects</a>
+                        <a href="{{url_for('admin.projects')}}" class="nav-item nav-link">Projects</a>
                     {% else %}
                     {% endif %}
                 </div>

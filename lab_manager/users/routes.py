@@ -54,6 +54,7 @@ def login():
         Methods     :   GET, POST
         Redirect to :   User Dashboard when successfull, Home if already Logged In
     """
+    
     if current_user.is_authenticated:
         flash("User already logged in!", 'info')
         return redirect(url_for('users.profile'))

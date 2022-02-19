@@ -1,7 +1,7 @@
 {% extends "layout.jinja2" %}
 {% block content %}
-<div class="container">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">New Project</button>
+<div class="container btn-header">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">New Project</button>
     <br>
 </div>
 
@@ -15,23 +15,47 @@
     </tr>
 </thead>
 <tbody>
-    {% for user in users %}
+    {% for project in projects %}
     <tr>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.project }}</td>
+        <td>{{ project.name }}</td>
+        <td>{{ project.created_by.email }}</td>
+        <td>{{ project.date_created }}</td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                <button type="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i></button>
-                <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editProjectModal{{project.id}}"><i class="bi bi-pencil-square"></i></button>
+                <button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
             </div>     
         </td>
-
     </tr>
+    {# Edit Project Modal #}
+    <div class="modal fade" id="editProjectModal{{project.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Project</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="{{url_for('admin.edit_project')}}" method="POST">
+              <div class="mb-3">
+                <input type="hidden" name="id" id="id" value={{project.id}}>
+                <label for="project-name" class="col-form-label">Project name:</label>
+                <input type="text" class="form-control" id="project-name" name="project-name" required=1 value={{project.name}}>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>    
     {% endfor %}
 </tbody>
 </table>
 
+{# Add Project Modal #}
 <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -40,10 +64,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="" method="POST">
+        <form action="{{url_for('admin.add_project')}}" method="POST">
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Project name:</label>
-            <input type="text" class="form-control" id="recipient-name">
+            <label for="project-name" class="col-form-label">Project name:</label>
+            <input type="text" class="form-control" id="project-name" name="project-name" required=1>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
