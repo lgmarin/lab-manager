@@ -94,6 +94,95 @@ def users():
     return render_template('admin/users.jinja2', title = "Users", users=users, user=current_user)
 
 
+@admin.route("/admin/user/edit/<id>", methods = ['GET', 'POST'])
+@admin_only
+def edit_user(id):
+    """ Admin Manage Projects Route - Edit User
+
+        Parameters  :   None
+        Methods     :   GET, POST
+        Redirect to :   Projects management page
+    """
+    user = User.query.filter_by(id=id).first()
+
+    if not user:
+        flash("The user does not exist!", 'warning')
+    elif request.method == 'POST':
+        user.name = request.form.get('user-name')
+        user.email = request.form.get('user-email')
+        user.project = request.form.get('user-project')
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash("User updated successfully!", 'success')
+
+        return redirect(url_for('admin.users'))
+
+    return redirect(url_for('admin.users'))
+
+
+@admin.route("/admin/user/approve/<id>", methods = ['GET', 'POST'])
+@admin_only
+def approve_user(id):
+    """ Admin Manage Projects Route - Approve User
+
+        Parameters  :   None
+        Methods     :   GET, POST
+        Redirect to :   Users management page
+    """
+    user = User.query.filter_by(id=id).first()
+
+    if not user:
+        flash("The user does not exist!", 'warning')
+    elif user.approved:
+        user.approved = False
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash(f"Approval removed from the user {user.email}.", 'warning')
+
+        return redirect(url_for('admin.users'))
+    
+    else:    
+        user.approved = True
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash(f"User {user.email} is now approved.", 'warning')
+
+        return redirect(url_for('admin.users'))        
+
+    return redirect(url_for('admin.users'))
+
+
+@admin.route("/admin/user/remove/<id>", methods = ['GET', 'POST'])
+@admin_only
+def remove_user(id):
+    """ Admin Manage Users Route - Remove User
+
+        Parameters  :   None
+        Methods     :   GET, POST
+        Redirect to :   Users management page
+    """
+    user = User.query.filter_by(id=id).first()
+
+    if not user:
+        flash("The user does not exist!", 'warning')
+    elif user == current_user:
+        flash("You can't delete yourself!", 'warning')
+    else:
+        db.session.delete(user)
+        db.session.commit()
+
+        flash("User removed successfully!", 'success')
+        return redirect(url_for('admin.users'))
+
+    return redirect(url_for('admin.users'))
+
+
 """ Admin Projects Management Routes Routes
 """
 

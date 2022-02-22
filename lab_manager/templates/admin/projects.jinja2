@@ -18,12 +18,12 @@
     {% for project in projects %}
     <tr>
         <td>{{ project.name }}</td>
-        <td>{{ project.created_by.email }}</td>
+        <td>{{ project.created_by }}</td>
         <td>{{ project.date_created }}</td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editProjectModal{{project.id}}"><i class="bi bi-pencil-square"></i></button>
-                <a class="btn btn-danger btn-sm" href="{{url_for('admin.remove_project', id=project.id)}}"><i class="bi bi-trash"></i></a>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-confirmation"><i class="bi bi-trash"></i></button>
             </div>     
         </td>
     </tr>
@@ -49,6 +49,25 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Modal Delete Confirmation -->
+    <div class="modal fade" id="delete-confirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Delete project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                You are going to delete the project {{project.name}}. Are you sure?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a class="btn btn-danger" href="{{url_for('admin.remove_project', id=project.id)}}">Delete</a>
+            </div>
+            </div>
+        </div>
     </div>    
     {% endfor %}
 </tbody>

@@ -24,19 +24,70 @@
         <td>
             {# {{user.approved}} #}
             {% if user.approved %}
-                <a href="#" class="btn btn-success active btn-sm" aria-current="page"><i class="bi bi-check-square"></i></a>
+                <a href="{{url_for('admin.approve_user', id=user.id)}}" class="btn btn-success btn-sm"><i class="bi bi-check-square"></i></a>
             {% else %}
-                <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-x-square"></i></a>
+                <a href="{{url_for('admin.approve_user', id=user.id)}}" class="btn btn-primary btn-sm"><i class="bi bi-x-square"></i></a>
             {% endif %}
         </td>
         <td>{{ user.biometry }}</td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                <button type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button>
-                <button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#edituserModal{{user.id}}"><i class="bi bi-pencil-square"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-confirmation"><i class="bi bi-trash"></i></button>                
             </div>        
         </td>
     </tr>
+
+    {# Edit user Modal #}
+    <div class="modal fade" id="edituserModal{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="{{url_for('admin.edit_user', id=user.id)}}" method="POST">
+              <div class="mb-3">
+                <label for="user-name" class="col-form-label">Name:</label>
+                <input type="text" class="form-control" id="user-name" name="user-name" required=1 value={{user.name}}>
+              </div>
+              <div class="mb-3">
+                <label for="user-email" class="col-form-label">Email:</label>
+                <input type="text" class="form-control" id="user-email" name="user-email" required=1 value={{user.email}}>
+              </div>
+              <div class="mb-3">
+                <label for="user-project" class="col-form-label">Project:</label>
+                <input type="text" class="form-control" id="user-project" name="user-project" required=1 value={{user.project}}>
+              </div>                            
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    <!-- Modal Delete Confirmation -->
+    <div class="modal fade" id="delete-confirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Delete user</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                You are going to delete the user {{user.name}}. Are you sure?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a class="btn btn-danger" href="{{url_for('admin.remove_user', id=user.id)}}">Delete</a>
+            </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
 </tbody>
 </table>
