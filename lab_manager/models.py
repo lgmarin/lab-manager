@@ -41,7 +41,7 @@ class User(db.Model, UserMixin):
 
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
     biometry = db.Column(db.Boolean, default = False, nullable = False)
-    project = db.Column(db.Integer, db.ForeignKey('project.id'), nullable = False)
+    project = db.Column(db.Integer, nullable = False)
 
     #Profile Data
     grr = db.Column(db.Integer, unique = True)
@@ -52,6 +52,8 @@ class User(db.Model, UserMixin):
     date_approved = db.Column(db.DateTime, default = datetime.utcnow)
     approved = db.Column(db.Boolean, default = False, nullable = False)
     admin = db.Column(db.Boolean, default = False, nullable = False)
+
+    projects = db.relationship('Project', backref="user", passive_deletes = False)
 
     def set_password(self, password_form):
         #Set Password, store hashed password on DB

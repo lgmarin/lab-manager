@@ -3,9 +3,11 @@ from os import path
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from lab_manager.config import Config
-
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
+
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
@@ -19,7 +21,7 @@ def create_app(config_class=Config):
     app.config.from_object(Config)
 
     db.init_app(app)
-    # login_manager.init_app(app)
+    migrate.init_app(app, db)
 
     #Load Main Blueprints
     from lab_manager.main.routes import main
