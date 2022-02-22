@@ -143,16 +143,16 @@ def add_project():
     return redirect(url_for('admin.projects'))
 
 
-@admin.route("/admin/projects/edit", methods = ['GET', 'POST'])
+@admin.route("/admin/projects/edit/<id>", methods = ['GET', 'POST'])
 @admin_only
-def edit_project():
+def edit_project(id):
     """ Admin Manage Projects Route - Edit Project
 
         Parameters  :   None
         Methods     :   GET, POST
         Redirect to :   Projects management page
     """
-    project = Project.query.filter_by(id=(request.form.get('id'))).first()
+    project = Project.query.filter_by(id=id).first()
 
     if not project:
         flash("The project does not exist!", 'warning')
@@ -168,3 +168,24 @@ def edit_project():
 
     return redirect(url_for('admin.projects'))
 
+@admin.route("/admin/projects/remove/<id>", methods = ['GET', 'POST'])
+@admin_only
+def remove_project(id):
+    """ Admin Manage Projects Route - Remove Project
+
+        Parameters  :   None
+        Methods     :   GET, POST
+        Redirect to :   Projects management page
+    """
+    project = Project.query.filter_by(id=id).first()
+
+    if not project:
+        flash("The project does not exist!", 'warning')
+    else:
+        db.session.delete(project)
+        db.session.commit()
+
+        flash("Project removed successfully!", 'success')
+        return redirect(url_for('admin.projects'))
+
+    return redirect(url_for('admin.projects'))

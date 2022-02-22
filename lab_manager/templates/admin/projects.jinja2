@@ -23,7 +23,7 @@
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editProjectModal{{project.id}}"><i class="bi bi-pencil-square"></i></button>
-                <button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                <a class="btn btn-danger btn-sm" href="{{url_for('admin.remove_project', id=project.id)}}"><i class="bi bi-trash"></i></a>
             </div>     
         </td>
     </tr>
@@ -36,9 +36,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="{{url_for('admin.edit_project')}}" method="POST">
+            <form action="{{url_for('admin.edit_project', id=project.id)}}" method="POST">
               <div class="mb-3">
-                <input type="hidden" name="id" id="id" value={{project.id}}>
                 <label for="project-name" class="col-form-label">Project name:</label>
                 <input type="text" class="form-control" id="project-name" name="project-name" required=1 value={{project.name}}>
               </div>
