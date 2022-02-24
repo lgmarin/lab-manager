@@ -24,6 +24,12 @@ Develop a Laboratory Manager using Flask to develop some skills with:
 * Work with DataTables.js together with Flask
 * Work with GIT
 * Work with relational database (SQL)
+* Configure and user DB Migrations
+
+## To-do
+
+- Deploy the final app 
+- Implement Unity Testing
 
 ## Dependencies
 
@@ -32,6 +38,7 @@ Develop a Laboratory Manager using Flask to develop some skills with:
 * FlaskLogin
 * WTForms
 * Werkzeug
+* Flask-Migrate
 - Written in Python 3.10.2
 
 ## Usage

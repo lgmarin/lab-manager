@@ -8,7 +8,12 @@
             <div class="card-body">
                 <h5 class="card-title">{{ user.email }}</h5>
                 <p class="card-text">{{ user.name }}</p>
-                {% if not user.approved %} <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#approval_info">Waiting for Approval</button> {% else %} <button type="button" class="btn btn-success btn-sm">Approved</button> {% endif %}
+                {% if not user.admin %}
+                    {% if not user.approved %} <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#approval_info">Waiting for Approval</button> {% else %} <button type="button" class="btn btn-success btn-sm">Approved</button> {% endif %}
+                {% else %}
+                    <button type="button" class="btn btn-warning btn-sm">Admin</button>
+                {% endif %}
+                
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Project: {{ user.project }}</li>

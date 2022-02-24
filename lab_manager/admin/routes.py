@@ -94,7 +94,7 @@ def users():
     return render_template('admin/users.jinja2', title = "Users", users=users, user=current_user)
 
 
-@admin.route("/admin/user/edit/<id>", methods = ['GET', 'POST'])
+@admin.route("/admin/users/edit/<id>", methods = ['GET', 'POST'])
 @admin_only
 def edit_user(id):
     """ Admin Manage Projects Route - Edit User
@@ -122,7 +122,7 @@ def edit_user(id):
     return redirect(url_for('admin.users'))
 
 
-@admin.route("/admin/user/approve/<id>", methods = ['GET', 'POST'])
+@admin.route("/admin/users/approve/<id>", methods = ['GET', 'POST'])
 @admin_only
 def approve_user(id):
     """ Admin Manage Projects Route - Approve User
@@ -158,7 +158,7 @@ def approve_user(id):
     return redirect(url_for('admin.users'))
 
 
-@admin.route("/admin/user/remove/<id>", methods = ['GET', 'POST'])
+@admin.route("/admin/users/remove/<id>", methods = ['GET', 'POST'])
 @admin_only
 def remove_user(id):
     """ Admin Manage Users Route - Remove User

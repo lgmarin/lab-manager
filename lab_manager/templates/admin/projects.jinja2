@@ -18,7 +18,7 @@
     {% for project in projects %}
     <tr>
         <td>{{ project.name }}</td>
-        <td>{{ project.created_by }}</td>
+        <td>{{ project.user.name }}</td>
         <td>{{ project.date_created }}</td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
