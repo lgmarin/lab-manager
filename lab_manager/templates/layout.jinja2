@@ -24,7 +24,6 @@
                     {% if user.is_authenticated and user.admin==True %}
                         <a href="{{url_for('admin.users')}}" class="nav-item nav-link">Users</a>
                         <a href="{{url_for('admin.projects')}}" class="nav-item nav-link">Projects</a>
-                    {% else %}
                     {% endif %}
                 </div>
                 <div class="navbar-nav">

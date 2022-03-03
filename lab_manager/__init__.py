@@ -35,8 +35,12 @@ def create_app(config_class=Config):
     from lab_manager.admin.routes import admin
     app.register_blueprint(admin)
 
+    #Load Posts Blueprints
+    from lab_manager.posts.routes import posts
+    app.register_blueprint(posts)
+
     #Load DB Models
-    from .models import User, Project
+    from .models import User, Project, Post
 
     initialize_database(app)
 

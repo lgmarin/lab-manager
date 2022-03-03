@@ -28,10 +28,12 @@ class User(db.Model, UserMixin):
             biometry        :   Boolean (Default = False)
             
             project         :   Relationship - Project
-            approved_by     :   Relationship - Admin
+            approved_by     :   String
             approved_in     :   DateTime
 
             admin           :   Boolean (Default = False)
+
+            posts           :   Relationship - Posts    
     """
     #Basic ID for users
     id = db.Column(db.Integer, primary_key = True)
@@ -54,6 +56,7 @@ class User(db.Model, UserMixin):
     admin = db.Column(db.Boolean, default = False, nullable = False)
 
     projects = db.relationship('Project', backref="user", passive_deletes = False)
+    posts = db.relationship('Post', backref="user", passive_deletes = True)
 
     def set_password(self, password_form):
         #Set Password, store hashed password on DB
@@ -80,3 +83,25 @@ class Project(db.Model):
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
     active = db.Column(db.Boolean, default=True, nullable=False)
     created_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+class Post(db.Model):
+    """ Post Model
+
+        Columns:
+
+            id              :   Integer
+            text            :   Text
+            date_created    :   DateTime
+            author          :   Integer            
+
+        Relatiosnhips:
+
+            comments        :   Comment Model
+            likes           :   Like Model
+    """
+
+    id = db.Column(db.Integer, primary_key = True)
+    text = db.Column(db.Text, nullable = False)
+    date_created = db.Column(db.DateTime, default = datetime.utcnow)
+    author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable = False)

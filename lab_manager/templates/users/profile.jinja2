@@ -47,14 +47,28 @@
                     <a href="#" class="btn btn-primary">Register</a>
                 </div>                
             </div> 
-            {% else %}
-            
-            {% endif %}          
+            {% endif %}
+
+            <div class="card text-center">
+                <div class="card-header">
+                    Featured
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div> 
+            <br>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPost">Create New Post</button>                       
         </div>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Appproval INFO -->
 <div class="modal fade" id="approval_info" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -75,4 +89,29 @@
     </div>
   </div>
 </div>
+
+<!-- Modal - Create New Post -->
+<div class="modal fade" id="newPost" tabindex="-1" aria-labelledby="newPostLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newPostLabel">Create New Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{url_for('posts.create_post')}}" method="POST">
+                <div class="modal-body">
+                    <label for="post-text" class="col-form-label">Post:</label>
+                    <textarea class="form-control" id="post-text" name="post-text"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
+
+
