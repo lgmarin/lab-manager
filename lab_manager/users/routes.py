@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, redirect, flash, url_for
 from lab_manager.users.forms import Registration, Login
 from lab_manager import db
-from lab_manager.models import User
+from lab_manager.models import User, Post
 from flask_login import current_user, login_user, logout_user, login_required
 
 users = Blueprint('users', __name__)
@@ -92,4 +92,6 @@ def profile():
         Methods     :   None
         Redirect to :   User Profile
     """
-    return render_template('users/profile.jinja2', title=current_user.name + ' Profile', user=current_user)
+    posts = Post.query.all()
+
+    return render_template('users/profile.jinja2', title=current_user.name + ' Profile', user=current_user, posts=posts)
