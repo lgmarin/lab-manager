@@ -19,12 +19,12 @@
     <tr>
         <td>{{ project.name }}</td>
         <td>{{ project.user.name }}</td>
-        <td>{{ project.date_created }}</td>
+        <td>{{ project.date_created.strftime("%m/%d/%Y") }}</td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editProjectModal{{project.id}}"><i class="bi bi-pencil-square"></i></button>
                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-confirmation"><i class="bi bi-trash"></i></button>
-            </div>     
+            </div>
         </td>
     </tr>
     {# Edit Project Modal #}
@@ -68,7 +68,7 @@
             </div>
             </div>
         </div>
-    </div>    
+    </div>
     {% endfor %}
 </tbody>
 </table>
@@ -103,8 +103,8 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
     <script>
-        $(document).ready(function () {
+      $(document).ready(function () {
         $('#data').DataTable();
-        });
+      });
     </script>
 {% endblock scripts %}
