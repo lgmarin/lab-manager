@@ -7,3 +7,4 @@ main = Blueprint('main', __name__)
 @login_required
 def home():
     return redirect(url_for("users.profile"))
+

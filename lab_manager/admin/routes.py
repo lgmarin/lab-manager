@@ -257,13 +257,13 @@ def edit_project(id):
 
     return redirect(url_for('admin.projects'))
 
-@admin.route("/admin/projects/remove/<id>", methods = ['GET', 'POST'])
+@admin.route("/admin/projects/remove/<id>")
 @admin_only
 def remove_project(id):
     """ Admin Manage Projects Route - Remove Project
 
         Parameters  :   None
-        Methods     :   GET, POST
+        Methods     :   
         Redirect to :   Projects management page
     """
     project = Project.query.filter_by(id=id).first()
