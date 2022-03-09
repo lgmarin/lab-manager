@@ -55,3 +55,32 @@ def remove_post(id: int):
         flash("Post deleted!", 'warning')
 
     return redirect(url_for('users.profile'))
+
+
+@posts.route("/posts/edit/<id>", methods=['GET', 'POST'])
+@login_required
+def edit_post(id: int):
+    """ Edit Post Route
+
+        Parameters  :   None
+        Methods     :   GET, POST
+        Redirect to :   Main page
+    """
+    post = Post.query.filter_by(id=id).first()
+    text = request.form.get("post-text")
+
+    if request.method == 'POST':
+        if not post:
+            flash("Post does not exist!", 'danger')
+        elif post.author != current_user.id:
+            flash("You don't have permission to edit this post!", 'danger')
+        elif text is None:
+            flash("Your post should not be empty!", 'danger')
+        else:
+            post.text = text
+            db.session.add(post)
+            db.session.commit()
+
+        return redirect(url_for('users.profile'))
+
+    return redirect(url_for('users.profile'))
