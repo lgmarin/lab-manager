@@ -34,6 +34,7 @@ class User(db.Model, UserMixin):
             admin           :   Boolean (Default = False)
 
             posts           :   Relationship - Posts    
+            comments        :   Relationship - Comments   
     """
     #Basic ID for users
     id = db.Column(db.Integer, primary_key = True)
@@ -57,6 +58,7 @@ class User(db.Model, UserMixin):
 
     projects = db.relationship('Project', backref="user", passive_deletes = False)
     posts = db.relationship('Post', backref="user", passive_deletes = True)
+    comments = db.relationship('Comment', backref="user", passive_deletes = True)
 
     def set_password(self, password_form):
         #Set Password, store hashed password on DB
@@ -98,10 +100,30 @@ class Post(db.Model):
         Relatiosnhips:
 
             comments        :   Comment Model
-            likes           :   Like Model
     """
 
     id = db.Column(db.Integer, primary_key = True)
     text = db.Column(db.Text, nullable = False)
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable = False)
+
+    comments = db.relationship('Comment', backref="post", passive_deletes=True)
+
+class Comment(db.Model):
+    """ Comment Model
+
+        Columns:
+
+            id              :   Integer
+            text            :   Text
+            date_created    :   DateTime
+            author          :   Integer            
+            post_id         :   Integer
+
+    """
+
+    id = db.Column(db.Integer, primary_key = True)
+    text = db.Column(db.Text, nullable = False)
+    date_created = db.Column(db.DateTime, default = datetime.utcnow)
+    author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable = False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete='CASCADE'), nullable = False)

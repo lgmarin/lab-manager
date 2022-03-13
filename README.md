@@ -17,7 +17,7 @@ Further down the road, the idea is to connect directly to the Access Point API (
 
 ## Objectives
 
-Develop a Laboratory Manager using Flask to develop some skills with:
+Develop a Laboratory Manager using Flask to develop some skills with, and work with the following technology or programming solutions:
 
 * Work with Web Development in Python
 * Development of a full stack web application

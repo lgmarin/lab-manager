@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, redirect, flash, url_for, request
 from lab_manager import db
-from lab_manager.models import Post
+from lab_manager.models import Post, Comment
 from flask_login import current_user, login_user, logout_user, login_required
 
 
@@ -82,5 +82,55 @@ def edit_post(id: int):
             db.session.commit()
 
         return redirect(url_for('users.profile'))
+
+    return redirect(url_for('users.profile'))
+
+
+@posts.route("/comment/<post_id>", methods=['GET', 'POST'])
+@login_required
+def create_comment(post_id):
+    """ Create Comment Route
+
+        Parameters  :   post id
+        
+        Methods     :   GET, POST
+
+        Redirect to :   Main page when successfull
+    """
+    if request.method == 'POST':
+        text = request.form.get('text')
+        if not text:
+            flash("Your comment should not be empty!", category='error')
+        else:
+            comment = Comment(text=text, author=current_user.id, post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()
+            flash("Comment created!", 'success')
+            return redirect(url_for('users.profile'))
+
+    return render_template('create-comment.html.j2', user = current_user)
+
+
+@posts.route("/comment/delete/<comment_id>")
+@login_required
+def delete_comment(comment_id):
+    """ Delete Comment Route
+
+        Parameters  :   comment id
+        
+        Methods     :   None
+
+        Redirect to :   Main page when successfull
+    """
+    comment = Comment.query.filter_by(id=id).first()
+
+    if not comment:
+        flash("Comment does not exist!", category='error')
+    elif current_user.id != comment.author and current_user.id != comment.post.author:
+        flash("You don\'t have permission to delete this post!", category='error')
+    else:
+        db.session.delete(comment)
+        db.session.commit()
+        flash("Comment deleted!")
 
     return redirect(url_for('users.profile'))
