@@ -98,7 +98,7 @@ def create_comment(post_id):
         Redirect to :   Main page when successfull
     """
     if request.method == 'POST':
-        text = request.form.get('text')
+        text = request.form.get('comment-text')
         if not text:
             flash("Your comment should not be empty!", category='error')
         else:
@@ -107,13 +107,13 @@ def create_comment(post_id):
             db.session.commit()
             flash("Comment created!", 'success')
             return redirect(url_for('users.profile'))
-
-    return render_template('create-comment.html.j2', user = current_user)
+    
+    return redirect(url_for('users.profile'))
 
 
 @posts.route("/comment/delete/<comment_id>")
 @login_required
-def delete_comment(comment_id):
+def remove_comment(comment_id):
     """ Delete Comment Route
 
         Parameters  :   comment id
@@ -122,7 +122,7 @@ def delete_comment(comment_id):
 
         Redirect to :   Main page when successfull
     """
-    comment = Comment.query.filter_by(id=id).first()
+    comment = Comment.query.filter_by(id=comment_id).first()
 
     if not comment:
         flash("Comment does not exist!", category='error')
@@ -131,6 +131,6 @@ def delete_comment(comment_id):
     else:
         db.session.delete(comment)
         db.session.commit()
-        flash("Comment deleted!")
+        flash("Comment deleted!", category='success')
 
     return redirect(url_for('users.profile'))

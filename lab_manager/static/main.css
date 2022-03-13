@@ -20,3 +20,8 @@
 .card-col {
     width: 14rem;
 }
+
+.card-buttons {
+    margin-top: 1rem;
+    align-items: center;
+}
