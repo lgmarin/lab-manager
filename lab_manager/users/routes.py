@@ -1,6 +1,6 @@
-from flask import render_template, Blueprint, redirect, flash, url_for
+from flask import render_template, Blueprint, redirect, flash, url_for, request
 from lab_manager.users.forms import Registration, Login
-from lab_manager import db
+from lab_manager import db, config
 from lab_manager.models import User, Post
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -92,6 +92,13 @@ def profile():
         Methods     :   None
         Redirect to :   User Profile
     """
-    posts = Post.query.all()
+    page = request.args.get('page', 1, type=int)
 
-    return render_template('users/profile.jinja2', title=current_user.name + ' Profile', user=current_user, posts=posts)
+    posts = Post.query.order_by(Post.date_created.desc()).paginate(page, 3, False)
+
+    next_url = url_for('users.profile', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('users.profile', page=posts.prev_num) \
+        if posts.has_prev else None
+    
+    return render_template('users/profile.jinja2', title=current_user.name, user=current_user, posts=posts, next_url=next_url, prev_url=prev_url)

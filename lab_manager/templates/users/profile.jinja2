@@ -28,99 +28,50 @@
                 <a href="#" class="card-link">Change Password</a>
             </div>
         </div>
-        <div class="card-buttons">
+        <div class="d-grid card-buttons">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPost">Create New Post</button>                       
         </div>
-        
     </div>
 
     <div class="col-md-9">
-        {% for post in posts %}    
-            <div class="card text">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span><a href="">{{post.user.name}}</a><small class="mutted" > in: {{post.date_created.strftime("%m/%d/%Y, %H:%M:%S")}}</small></span>
-                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <a data-bs-toggle="modal" data-bs-target="#commentPost{{post.id}}" class="btn btn-primary"><i class="bi bi-chat-left-text"></i></a>
-                        {% if user.id == post.author %}
-                            <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editPost{{post.id}}"><i class="bi bi-pencil"></i></a>                            
-                            <a class="btn btn-danger" href="{{url_for('posts.remove_post', id=post.id)}}"><i class="bi bi-trash"></i></a>
-                        {% endif %}
-                    </div>                        
-                </div>
-                <div class="card-body">
-                    <p class="card-text">{{post.text}}</p>
-                        <p>
-                        {% if post.comments|length %}
-                            <a data-bs-toggle="collapse" href="#comments-{{post.id}}" aria-expanded="false" aria-controls="colapse-comments-{{post.id}}"><small>View {{post.comments|length}} Comments</small></a>
-                        {% else %}
-                            <small class="text-mutted">No Comments</small>
-                        {% endif %}
-                        </p>
-                        <div class="collapse" id="comments-{{post.id}}">
-                            <div class="card card-body">
-                                {% for comment in post.comments %}
-                                    <div class="d-flex justify-content-between aling-items-center">
-                                        <div>
-                                            <a href="">{{comment.user.name}}</a>: {{comment.text}}
-                                        </div>
-                                        <div>
-                                            <small class="text-mutted">{{comment.date_created.strftime("%m/%d/%Y, %H:%M:%S")}}</small>
-                                            {% if user.id == comment.author or user.id == post.author %}
-                                                <a href="{{url_for('posts.remove_comment', comment_id = comment.id)}}"><i class="bi bi-trash"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                {% endfor %}                                
-                            </div>
-                        </div>                    
-                </div>
-            </div>
-            <br>
-
-            <!-- Modal - Edit Post -->
-            <div class="modal fade" id="editPost{{post.id}}" tabindex="-1" aria-labelledby="editPostLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editPostLabel">Edit Post</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="{{url_for('posts.edit_post', id=post.id)}}" method="POST">
-                            <div class="modal-body">
-                                <label for="post-text" class="col-form-label">Post:</label>
-                                <textarea class="form-control" id="post-text" name="post-text" text="{{post.text}}" required=1></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Post</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal - Comment Post -->
-            <div class="modal fade" id="commentPost{{post.id}}" tabindex="-1" aria-labelledby="commentPostLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="commentPostLabel">Comment Post</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="{{url_for('posts.create_comment', post_id=post.id)}}" method="POST">
-                            <div class="modal-body">
-                                <label for="post-text" class="col-form-label">Comment:</label>
-                                <textarea class="form-control" id="comment-text" name="comment-text" text="Enter your comment here." required=1></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Post</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        {% for post in posts.items %}    
+            {% include "./users/_posts.jinja2" %}
         {% endfor %}
+        <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            {% if posts.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" href="{{prev_url}}">Previous</a>
+                </li>            
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+            {% endif %}
+
+            {% for page_num in posts.iter_pages() %}
+                {% if page_num %}
+                    {% if page_num != posts.page %}
+                        <li class="page-item"><a class="page-link" href="{{ url_for('users.profile', page=page_num) }}">{{ page_num }}</a></li>
+                    {% else %}
+                        <li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if posts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{next_url}}">Next</a>
+                </li>            
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+            {% endif %}
+        </ul>
+        </nav>
     </div>
 </div>
 

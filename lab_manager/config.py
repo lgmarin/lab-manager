@@ -3,3 +3,4 @@ class Config:
     DB_NAME = "database.db"
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_NAME}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    POSTS_PER_PAGE = 4
