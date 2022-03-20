@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, redirect, flash, url_for, abort, request
+from flask import render_template, Blueprint, redirect, flash, url_for, abort, request, g
 from flask_login import current_user, login_user, logout_user
 from lab_manager.users.forms import Registration, Login
 from lab_manager import db
@@ -59,6 +59,7 @@ def login():
             flash(f'Admin {form.email} logged in successfully!', category='success')
             return redirect(url_for("admin.dashboard"))
 
+    g.search_form=False
     return render_template('admin/login.jinja2', title='Admin Login', form=form, user=current_user)
 
 
@@ -90,6 +91,7 @@ def users():
     """     
 
     users = User.query
+    g.search_form=False
 
     return render_template('admin/users.jinja2', title = "Users", users=users, user=current_user)
 
@@ -197,6 +199,7 @@ def projects():
     """     
 
     projects = Project.query
+    g.search_form=False
 
     return render_template('admin/projects.jinja2', title = "Projects", projects=projects, user=current_user)
 

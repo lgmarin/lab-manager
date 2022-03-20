@@ -27,6 +27,15 @@
                     {% endif %}
                 </div>
                 <div class="navbar-nav">
+                    {% if g.search_form %}
+                    <form class="navbar-form navbar-left" method="get"
+                            action="{{ url_for('posts.search') }}">
+                        <div class="form-group">
+                            {{ g.search_form.q(size=20, class='form-control',
+                                placeholder=g.search_form.q.label.text) }}
+                        </div>
+                    </form>
+                    {% endif %}                
                     {% if user.is_authenticated and user.admin==False %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{user.email}} </a>

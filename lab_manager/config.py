@@ -4,3 +4,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_NAME}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 4
+    ELASTICSEARCH_URL='http://localhost:9200'

@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, redirect, flash, url_for, request
+from flask import current_app, render_template, Blueprint, redirect, flash, url_for, request
 from lab_manager.users.forms import Registration, Login
 from lab_manager import db, config
 from lab_manager.models import User, Post
@@ -94,7 +94,7 @@ def profile():
     """
     page = request.args.get('page', 1, type=int)
 
-    posts = Post.query.order_by(Post.date_created.desc()).paginate(page, 3, False)
+    posts = Post.query.order_by(Post.date_created.desc()).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
 
     next_url = url_for('users.profile', page=posts.next_num) \
         if posts.has_next else None

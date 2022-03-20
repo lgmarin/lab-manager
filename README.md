@@ -14,9 +14,9 @@ There is a lot of different users in the lab, on different projects (Engineering
 
 Further down the road, the idea is to connect directly to the Access Point API (A biometric lock) to create the users account and to allow the users to create their biometric key (after the permission of the leader of the project).
 
-![UsersAdmPage](/imgs/admin_users.png "Users Admin Page")
-
 ![ProfilePage](/imgs/admin_profile.png "Users Profile Page")
+
+![UsersAdmPage](/imgs/admin_users.png "Users Admin Page")
 
 ## Objectives
 
@@ -61,6 +61,15 @@ Install all dependencies:
 ```sh
 pip install -r requirements.txt
 ```
+
+Run Elasticsearch Docker Container (For DEV mode)
+    
+```sh
+docker run --name elasticsearch -d -p 9200:9200 -p 9300:9300 --rm \
+    -e "discovery.type=single-node" \
+    docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+```
+
 
 Run Flask server (In DEV mode)
     

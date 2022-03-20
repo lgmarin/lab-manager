@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, redirect, flash, url_for, request
+from flask import current_app, g, render_template, Blueprint, redirect, flash, url_for, request
 from lab_manager import db
 from lab_manager.models import Post, Comment
 from flask_login import current_user, login_user, logout_user, login_required
@@ -134,3 +134,24 @@ def remove_comment(comment_id):
         flash("Comment deleted!", category='success')
 
     return redirect(url_for('users.profile'))
+
+
+@posts.route('/posts/search')
+@login_required
+def search():
+    if not g.search_form.validate():
+        return redirect(url_for('posts.search'))
+
+    page = request.args.get('page', 1, type=int)
+
+    posts, total = Post.search(g.search_form.q.data, page,
+                               current_app.config['POSTS_PER_PAGE'])
+
+    pages = int(total / current_app.config['POSTS_PER_PAGE'])
+    next_url = url_for('posts.search', q=g.search_form.q.data, page=page + 1) \
+        if total > page * current_app.config['POSTS_PER_PAGE'] else None
+    prev_url = url_for('posts.search', q=g.search_form.q.data, page=page - 1) \
+        if page > 1 else None
+
+    return render_template('search.jinja2', title='Search', posts=posts, user=current_user,
+                           next_url=next_url, prev_url=prev_url, pages=pages, page=page)

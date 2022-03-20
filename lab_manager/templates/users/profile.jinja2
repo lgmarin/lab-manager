@@ -37,7 +37,7 @@
         {% for post in posts.items %}    
             {% include "./users/_posts.jinja2" %}
         {% endfor %}
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Posts pagination">
         <ul class="pagination justify-content-end">
             {% if posts.has_prev %}
                 <li class="page-item">

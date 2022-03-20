@@ -1,3 +1,4 @@
+from elasticsearch import Elasticsearch
 from flask import Flask
 from os import path
 from flask_login import LoginManager
@@ -23,6 +24,9 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
 
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+        if app.config['ELASTICSEARCH_URL'] else None
+        
     #Load Main Blueprints
     from lab_manager.main.routes import main
     app.register_blueprint(main)
