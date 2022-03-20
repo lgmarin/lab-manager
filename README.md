@@ -15,6 +15,8 @@ Further down the road, the idea is to connect directly to the Access Point API (
 
 ![UsersAdmPage](/imgs/admin_users.png "Users Admin Page")
 
+![ProfilePage](/imgs/admin_profile.png "Users Profile Page")
+
 ## Objectives
 
 Develop a Laboratory Manager using Flask to develop some skills with, and work with the following technology or programming solutions:
@@ -26,12 +28,13 @@ Develop a Laboratory Manager using Flask to develop some skills with, and work w
 * Work with DataTables.js together with Flask
 * Work with GIT
 * Work with relational database (SQL)
-* Configure and user DB Migrations
+* Configure and use DB Migrations
 
 ## To-do
 
 - Deploy the final app 
 - Implement Unity Testing
+- Implement Elasticsearch
 
 ## Dependencies
 
@@ -43,7 +46,7 @@ Develop a Laboratory Manager using Flask to develop some skills with, and work w
 * WTForms
 * Werkzeug
 * Flask-Migrate
-- Written in Python 3.10.2
+* Elasticsearch
 
 ## Usage
 
