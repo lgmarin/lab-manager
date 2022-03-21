@@ -3,7 +3,7 @@ from flask import Flask
 from os import path
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from lab_manager.config import Config
+from config import Config
 from flask_migrate import Migrate
 
 db = SQLAlchemy()
@@ -46,8 +46,6 @@ def create_app(config_class=Config):
     #Load DB Models
     from .models import User, Project, Post
 
-    initialize_database(app)
-
     #Load Login Manager
     login_manager.init_app(app)
 
@@ -59,10 +57,3 @@ def create_app(config_class=Config):
         return User.query.get(int(id))    
     
     return app
-
-def initialize_database(app):
-    """ Initialize DB - Create if none found
-    """
-    if not path.exists("lab_manager/" + Config.DB_NAME):
-        db.create_all(app=app)
-        print("Database Created!")

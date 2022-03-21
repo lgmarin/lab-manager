@@ -20,7 +20,7 @@
                 
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Project: {{ user.project }}</li>
+                <li class="list-group-item">Project: {{ user.project.name }}</li>
                 <li class="list-group-item">Course: {% if not user.course %} <a href="">Enter Course</a> {% else %} {{ user.course }} {% endif %}</li>
                 <li class="list-group-item">Biometry: {% if not user.approved and not user.admin %} Waiting for Approval {% elif not user.biometry %} <a href="">Register Biometry</a> {% else %} Biometry registered {% endif %} </li>
             </ul>

@@ -1,7 +1,7 @@
 from flask import current_app, render_template, Blueprint, redirect, flash, url_for, request
 from lab_manager.users.forms import Registration, Login
-from lab_manager import db, config
-from lab_manager.models import User, Post
+from lab_manager import db
+from lab_manager.models import Project, User, Post
 from flask_login import current_user, login_user, logout_user, login_required
 
 users = Blueprint('users', __name__)
@@ -20,6 +20,7 @@ def register():
         return redirect(url_for('users.profile'))
 
     form = Registration()
+    form.project.choices = [(g.id, g.name) for g in Project.query.order_by('name')]
 
     if form.validate_on_submit():
 

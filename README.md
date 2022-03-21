@@ -6,7 +6,7 @@ An University Laboratory Management tool developed in Python/Flask
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 ![](https://img.shields.io/badge/Framework-Flask-informational?style=flat&logo=flask&logoColor=white&color=blue)
 ![](https://img.shields.io/badge/Tools-Bootstrap-informational?style=flat&logo=bootstrap&logoColor=white&color=blue)
-
+![](https://img.shields.io/badge/Tools-Docker-informational?style=flat&logo=docker&logoColor=white&color=blue)
 
 I created this app based on the needs of the Laboratório de Máquinas Térmicas at the Federal University of Paraná.
 
@@ -24,6 +24,7 @@ Develop a Laboratory Manager using Flask to develop some skills with, and work w
 
 * Work with Web Development in Python
 * Development of a full stack web application
+* Implement Elasticsearch
 * Work with form validation in Flask
 * Work with HTML and Bootstrap
 * Work with DataTables.js together with Flask
@@ -35,7 +36,6 @@ Develop a Laboratory Manager using Flask to develop some skills with, and work w
 
 - Deploy the final app 
 - Implement Unity Testing
-- Implement Elasticsearch
 
 ## Dependencies
 
@@ -70,9 +70,50 @@ docker run --name elasticsearch -d -p 9200:9200 -p 9300:9300 --rm \
     docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
 ```
 
-
 Run Flask server (In DEV mode)
     
 ```sh
 export FLASK_ENV=development; flask run
+```
+
+## Docker Commands
+
+Build Docker Container
+
+```sh
+docker build -t lab_manager:latest .
+```
+
+Run MySQL Docker Container
+
+```sh
+ docker run --name mysql -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes \
+    -e MYSQL_DATABASE=lab_manager -e MYSQL_USER=lab_manager \
+    -e MYSQL_PASSWORD=MYSQL_PASSWORD_GOES_HERE \
+    mysql/mysql-server:latest
+```
+
+Run Elasticsearch Docker Container
+
+```sh
+docker run --name elasticsearch -d -p 9200:9200 -p 9300:9300 --rm \
+    -e "discovery.type=single-node" \
+    docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+```
+
+Run Docker Container
+
+```sh
+docker run --name lab_manager -d -p 8000:5000 --rm -e SECRET_KEY=my-super-secret-key \
+    --link mysql:dbserver \
+    -e DATABASE_URL=mysql+pymysql://lab_manager:MYSQL_PASSWORD_GOES_HERE@dbserver/lab_manager \
+    --link elasticsearch:elasticsearch \
+    -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
+    lab_manager:latest
+```
+
+View Docker Container Logs
+
+```sh
+docker logs lab_manager
 ```
