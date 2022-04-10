@@ -1,5 +1,5 @@
 from flask import current_app, render_template, Blueprint, redirect, flash, url_for, request
-from lab_manager.users.forms import Registration, Login
+from lab_manager.users.forms import Registration, Login, ChangePassword
 from lab_manager import db
 from lab_manager.models import Project, User, Post
 from flask_login import current_user, login_user, logout_user, login_required
@@ -75,6 +75,41 @@ def login():
             return redirect(url_for('users.profile'))
 
     return render_template('users/login.jinja2', title='Login', form=form, user=current_user)
+
+
+@users.route("/change-password", methods = ['GET', 'POST'])
+@login_required
+def change_password():
+    """ Change Password Route
+
+        Parameters  :   None
+        Methods     :   GET, POST
+        Redirect to :   Login page when successfull
+    """
+    form = ChangePassword()
+
+    user = User.query.filter_by(id=current_user.id)
+
+    if form.validate_on_submit():
+
+        #Verify if email or grr is already in use
+        # email_exists = User.query.filter_by(email=form.email.data).first()
+        # grr_exists = User.query.filter_by(grr=form.grr.data).first()
+       
+        if user is None or not user.check_password(form.password.data):
+            flash("You should enter your correct actual password!", 'danger')
+            return redirect(url_for('home.main'))
+        else:
+
+            user.set_password(form.password.data)
+            db.session.add(user)
+            db.session.commit()
+
+            flash(f'Password for user {form.email.data} updated successfully!', 'success')
+
+            return redirect(url_for('home.main'))
+
+    return render_template('users/change_password.jinja2', title='Register', form=form, user=current_user)
 
 
 @users.route("/logout")
