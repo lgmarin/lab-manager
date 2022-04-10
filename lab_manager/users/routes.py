@@ -88,7 +88,7 @@ def change_password():
     """
     form = ChangePassword()
 
-    user = User.query.filter_by(id=current_user.id)
+    user = User.query.filter_by(id=current_user.id).first()
 
     if form.validate_on_submit():
 
@@ -96,18 +96,18 @@ def change_password():
         # email_exists = User.query.filter_by(email=form.email.data).first()
         # grr_exists = User.query.filter_by(grr=form.grr.data).first()
        
-        if user is None or not user.check_password(form.password.data):
+        if user is None or not user.check_password(form.current_password.data):
             flash("You should enter your correct actual password!", 'danger')
-            return redirect(url_for('home.main'))
+            return redirect(url_for('main.home'))
         else:
 
             user.set_password(form.password.data)
             db.session.add(user)
             db.session.commit()
 
-            flash(f'Password for user {form.email.data} updated successfully!', 'success')
+            flash(f'Password for user {current_user.email} updated successfully!', 'success')
 
-            return redirect(url_for('home.main'))
+            return redirect(url_for('main.home'))
 
     return render_template('users/change_password.jinja2', title='Register', form=form, user=current_user)
 
