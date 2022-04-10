@@ -47,6 +47,10 @@ Develop a Laboratory Manager using Flask to develop some skills with, and work w
 * Flask-Migrate
 * Elasticsearch
 
+## Database Schema
+
+![LabManager Database](/imgs/db_schema.png "LabManager Database Schema")
+
 ## Usage
 
 Prepare the virtual environment (Using Linux):
