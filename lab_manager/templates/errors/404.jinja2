@@ -1,0 +1,6 @@
+{% extends "./layout.jinja2" %}
+
+{% block content %}
+    <h1>Sorry, but the page that you requested was not found on our servers!</h1>
+    <p><a href="{{ url_for('main.home') }}">Back</a></p>
+{% endblock %}

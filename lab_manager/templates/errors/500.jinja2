@@ -1,0 +1,6 @@
+{% extends "./layout.jinja2" %}
+
+{% block content %}
+    <h1>Oops! A internal error was found when processing your request!</h1>
+    <p><a href="{{ url_for('main.home') }}">Back</a></p>
+{% endblock %}

@@ -49,6 +49,12 @@ def create_app(config_class=Config):
     #Load Login Manager
     login_manager.init_app(app)
 
+    #Error Handling Registration
+    from lab_manager.errors.errors_handler import errors
+    app.register_blueprint(errors)
+    
+    # app.register_error_handler(404, ErrorsHandler.notFoundError)
+    # app.register_error_handler(500, ErrorsHandler.internalServerError)
 
     @login_manager.user_loader
     def load_user(id):
