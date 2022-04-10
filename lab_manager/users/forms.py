@@ -30,3 +30,8 @@ class Login(FlaskForm):
     email        = StringField('Email Address', validators=[Length(min=6, max=35), DataRequired(), Email()])
     password     = PasswordField('Password', validators=[Length(min=6, max=20), DataRequired()])
     submit       = SubmitField('Login')
+
+class ChangePassword(FlaskForm):
+    current_password    = PasswordField('Current Password', validators=[Length(min=6, max=20), DataRequired()])
+    password            = PasswordField('New Password', validators=[Length(min=6, max=20), DataRequired()])
+    password2           = PasswordField('Confirm your New Password', validators=[EqualTo('password'), DataRequired()])

@@ -1,13 +1,14 @@
-import logging
-from logging.handlers import RotatingFileHandler
 import os
-from elasticsearch import Elasticsearch
 from flask import Flask
-from os import path
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from elasticsearch import Elasticsearch
+
+import logging
+from logging.handlers import RotatingFileHandler
+
 from config import Config
-from flask_migrate import Migrate
 
 db = SQLAlchemy()
 migrate = Migrate()
