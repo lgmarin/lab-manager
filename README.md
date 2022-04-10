@@ -76,6 +76,11 @@ Run Flask server (In DEV mode)
 export FLASK_ENV=development; flask run
 ```
 
+Run Tests
+```sh
+python -m pytest
+```
+
 ## Docker Commands
 
 Build Docker Container
