@@ -1,3 +1,6 @@
+import logging
+from logging.handlers import RotatingFileHandler
+import os
 from elasticsearch import Elasticsearch
 from flask import Flask
 from os import path
@@ -52,9 +55,21 @@ def create_app(config_class=Config):
     #Error Handling Registration
     from lab_manager.errors.errors_handler import errors
     app.register_blueprint(errors)
+
+    #Loggin Errors
+    if not os.path.exists('logs'):
+        os.mkdir('logs')
     
-    # app.register_error_handler(404, ErrorsHandler.notFoundError)
-    # app.register_error_handler(500, ErrorsHandler.internalServerError)
+    file_handler = RotatingFileHandler('logs/labmanager.log', maxBytes=10240, backupCount=5)
+    
+    file_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+    
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.setLevel(logging.INFO)
+    app.logger.info('LabManager started!')
+        
 
     @login_manager.user_loader
     def load_user(id):

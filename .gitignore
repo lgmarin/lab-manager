@@ -130,3 +130,5 @@ dmypy.json
 
 .vscode/
 lab_manager/dev_defaults.py
+logs
+logs/
