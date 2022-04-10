@@ -1,6 +1,14 @@
 {% extends "./layout.jinja2" %}
 
 {% block content %}
-    <h1>Sorry, but the page that you requested was not found on our servers!</h1>
-    <p><a href="{{ url_for('main.home') }}">Back</a></p>
+    <div class="container center">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <span class="display-1 d-block">404</span>
+                <div class="mb-4">Sorry, but the page that you requested was not found on our servers!</div>
+                <a class="btn btn-link" href="{{ url_for('main.home') }}">Back</a>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
