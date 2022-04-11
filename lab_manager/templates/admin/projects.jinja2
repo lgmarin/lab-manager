@@ -19,7 +19,11 @@
     <tr>
         <td>{{ project.name }}</td>
         <td>{{ project.user.name }}</td>
-        <td>{{ project.date_created.strftime("%m/%d/%Y") }}</td>
+        <td>{% if project.date_created == None %}
+          --
+        {% else %}
+        {{ project.date_created.strftime("%m/%d/%Y") }}
+        {% endif %}</td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editProjectModal{{project.id}}"><i class="bi bi-pencil-square"></i></button>
