@@ -51,7 +51,7 @@ Develop a Laboratory Manager using Flask to develop some skills with, and work w
 
 ![LabManager Database](/imgs/db_schema.png "LabManager Database Schema")
 
-## Usage
+## Run Development Mode Locally
 
 Prepare the virtual environment (Using Linux):
 
@@ -74,55 +74,34 @@ docker run --name elasticsearch -d -p 9200:9200 -p 9300:9300 --rm \
     docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
 ```
 
+You can run either with MySql server or SqLite. For Sqlite modify the config.py file to use local Sqlite DB.
+
+To Run with MySQL Docker Container
+
+```sh
+ docker run --name mysql -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes \
+    -e MYSQL_DATABASE=lab_manager -e MYSQL_USER=lab_manager \
+    -e MYSQL_PASSWORD=MYSQL_PASSWORD_GOES_HERE \
+    mysql/mysql:8.0.28
+```
+
 Run Flask server (In DEV mode)
     
 ```sh
 export FLASK_ENV=development; flask run
 ```
 
+## Testing
+
 Run Tests
 ```sh
 python -m pytest
 ```
 
-## Docker Commands
+## Run Production Server in Docker
 
-Build Docker Container
-
-```sh
-docker build -t lab_manager:latest .
-```
-
-Run MySQL Docker Container
+Build and Run Docker Compose
 
 ```sh
- docker run --name mysql -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes \
-    -e MYSQL_DATABASE=lab_manager -e MYSQL_USER=lab_manager \
-    -e MYSQL_PASSWORD=MYSQL_PASSWORD_GOES_HERE \
-    mysql/mysql-server:latest
-```
-
-Run Elasticsearch Docker Container
-
-```sh
-docker run --name elasticsearch -d -p 9200:9200 -p 9300:9300 --rm \
-    -e "discovery.type=single-node" \
-    docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
-```
-
-Run Docker Container
-
-```sh
-docker run --name lab_manager -d -p 8000:5000 --rm -e SECRET_KEY=my-super-secret-key \
-    --link mysql:dbserver \
-    -e DATABASE_URL=mysql+pymysql://lab_manager:MYSQL_PASSWORD_GOES_HERE@dbserver/lab_manager \
-    --link elasticsearch:elasticsearch \
-    -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
-    lab_manager:latest
-```
-
-View Docker Container Logs
-
-```sh
-docker logs lab_manager
+docker-compose up
 ```
