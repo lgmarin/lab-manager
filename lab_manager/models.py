@@ -90,7 +90,7 @@ class User(db.Model, UserMixin):
 
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
     biometry = db.Column(db.Boolean, default = False, nullable = False)
-    project = db.Column(db.Integer, nullable = False)
+    project = db.Column(db.Integer, nullable = True)
 
     #Profile Data
     grr = db.Column(db.Integer, unique = True)
@@ -114,6 +114,9 @@ class User(db.Model, UserMixin):
         #Check password based on the stored hash
         return check_password_hash(self.password, password_form)
 
+    def create_password(new_pass):
+        return generate_password_hash(new_pass)
+
 
 class Project(db.Model):
     """ Project Model
@@ -130,6 +133,7 @@ class Project(db.Model):
     name = db.Column(db.String(150), unique = True)
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
     active = db.Column(db.Boolean, default=True, nullable=False)
+    reserved = db.Column(db.Boolean, default=False, nullable=False)
     created_by = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 

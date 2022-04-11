@@ -6,7 +6,6 @@ from lab_manager.models import User
 
 class TestConfig:
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
     ELASTICSEARCH_URL = None    
 
 
