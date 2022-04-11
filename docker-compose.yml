@@ -1,13 +1,13 @@
 version: "3.9"
 services:
   db:
-    image: mysql:latest
+    image: mysql:8.0.28
     restart: always
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=lab_manager
       - MYSQL_USER=lab_manager
-      - MYSQL_PASSWORD=biscoito
+      - MYSQL_PASSWORD=superStrongPassword
     ports:
       - "5432:5432"
     volumes:
@@ -35,7 +35,10 @@ services:
       - "5000:5000"
     environment:
       FLASK_ENV: production
-      DATABASE_URL: mysql+pymysql://lab_manager:MYSQL_PASSWORD_GOES_HERE@dbserver/lab_manager
+      DB_USER  : lab_manager
+      DB_PASSWORD : superStrongPassword 
+      DB_HOST: mysql
+      DB_NAME: lab_manager
       ELASTICSEARCH_URL: http://elasticsearch:9200
 
 volumes:
