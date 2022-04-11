@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=lab_manager
+      - MYSQL_USER=lab_manager
+      - MYSQL_PASSWORD=biscoito
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/mysql
+
+  esearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+    restart: always
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"  
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+      - esearch
+    networks:
+      - default
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_ENV: production
+      DATABASE_URL: mysql+pymysql://lab_manager:MYSQL_PASSWORD_GOES_HERE@dbserver/lab_manager
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+
+volumes:
+  db:
+    driver: local
