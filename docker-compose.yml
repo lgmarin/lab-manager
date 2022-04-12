@@ -9,9 +9,11 @@ services:
       - MYSQL_USER=lab_manager
       - MYSQL_PASSWORD=superStrongPassword
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - db:/var/lib/mysql
+      - ./db:/var/lib/mysql
+    networks:
+      - default
 
   esearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
@@ -20,27 +22,29 @@ services:
       - discovery.type=single-node
     ports:
       - "9200:9200"
-      - "9300:9300"  
+      - "9300:9300"
+    networks:
+      - default
 
   server:
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      - db
       - esearch
+      - db
     networks:
       - default
     ports:
-      - "5000:5000"
+      - "5000:5000"    
     environment:
       FLASK_ENV: production
-      DB_USER  : lab_manager
-      DB_PASSWORD : superStrongPassword 
-      DB_HOST: mysql
+      DB_USER: lab_manager
+      DB_PASSWORD: superStrongPassword 
+      DB_HOST: db
+      DB_PORT: "3306"
       DB_NAME: lab_manager
       ELASTICSEARCH_URL: http://elasticsearch:9200
 
 volumes:
   db:
-    driver: local

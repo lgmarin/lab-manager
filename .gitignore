@@ -132,3 +132,4 @@ dmypy.json
 lab_manager/dev_defaults.py
 logs
 logs/
+db

@@ -20,4 +20,4 @@ RUN chown -R lab_manager:lab_manager ./
 USER lab_manager
 
 EXPOSE 5000
-ENTRYPOINT ["./boot.sh"]
+CMD ["./boot.sh"]
