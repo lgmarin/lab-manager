@@ -1,7 +1,0 @@
-{
-    "terminal.integrated.defaultProfile.linux": "zsh",
-    "terminal.integrated.fontFamily": "NotoSansMono Nerd Font",
-    "python.analysis.autoImportCompletions": false,
-    "python.testing.unittestEnabled": true,
-    "python.testing.pytestEnabled": true
-}
